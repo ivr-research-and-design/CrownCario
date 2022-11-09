@@ -83,11 +83,8 @@ process.stdin.on('keypress', (str, key) => {
     /*stopping the subscription and emission of data events
     which come from the crown
     */
-    fs.appendFile("../res/training_data/11_4_2022_Davis-Baseline.txt", JSON.stringify(datapoints, null, "\t"), function(err) {
-        if(err) {
-            return console.log(err);
-        }
-    });
+    txt_data = JSON.stringify(datapoints, null, "\t")
+    fs.writeFileSync('../res/training_data/test.json', txt_data);
     setTimeout(endSession, 1000);
   }
 });
