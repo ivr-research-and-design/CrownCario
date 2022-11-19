@@ -52,10 +52,12 @@ const endSession = async () => {
     /*stopping the subscription and emission of data events
     which come from the crown
     */
+    txt_data = JSON.stringify(datapoints, null, "\t")
+    fs.writeFileSync('../res/training_data/Arnav/Arnav-leftmiddlefinger-11-9-2022.json', txt_data);
+
     subscription.unsubscribe();
     console.log("Exiting...");
-
-    process.exit();
+    setTimeout(process.exit(), 1000);
 }
 
 /*
@@ -72,8 +74,11 @@ datapoints = new Array();
 //creates a subscription for raw data emission from the crown.
 const subscription = notion.brainwaves("raw").subscribe((brainwaves) => {
 
-    datapoints.push(brainwaves)
+    datapoints.
+    push(brainwaves)
 });
+
+setTimeout(endSession, 30000);
 
 const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
@@ -83,9 +88,6 @@ process.stdin.on('keypress', (str, key) => {
     /*stopping the subscription and emission of data events
     which come from the crown
     */
-    txt_data = JSON.stringify(datapoints, null, "\t")
-    fs.writeFileSync('../res/training_data/test.json', txt_data);
-    setTimeout(endSession, 1000);
   }
 });
 
